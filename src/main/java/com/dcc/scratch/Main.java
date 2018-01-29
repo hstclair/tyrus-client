@@ -20,7 +20,19 @@ public class Main {
             final ClientEndpointConfig cec = ClientEndpointConfig.Builder.create().build();
 
             ClientManager client = ClientManager.createClient();
-            client.connectToServer(new Endpoint() {
+            client.connectToServer(new ClientEndpoint(), cec, new URI("ws://localhost:8025/websockets/permutifier"));
+
+            messageLatch.await(1, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+/*
+new Endpoint() {
 
                 @Override
                 public void onOpen(Session session, EndpointConfig config) {
@@ -45,10 +57,5 @@ public class Main {
                     }
                 }
             }, cec, new URI("ws://localhost:8025/websockets/echo"));
-            messageLatch.await(3, TimeUnit.SECONDS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
+ */
 
